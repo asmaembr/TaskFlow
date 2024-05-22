@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: header"></head>
+<body class="bg-dark">
+<div class="container d-flex justify-content-center align-items-center">
+    <div class=" bg-light card shadow-sm mt-5 p-4" style="width: 100%; max-width: 900px;">
+        <h2 class="card-title text-center mb-4">Inscription</h2>
+        <form action="/register" method="post">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group m-3">
+                            <label for="username">Username:</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label for="fullName">Full Name:</label>
+                            <input type="text" class="form-control" id="fullName" name="fullName" required>
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label for="tel">Telephone:</label>
+                            <input type="tel" class="form-control" id="tel" name="tel" required>
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label for="birthDay">Birth Day:</label>
+                            <input type="date" class="form-control" id="birthDay" name="birthDay" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group m-3">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label for="sex">Sex:</label>
+                            <select class="form-control" id="sex" name="sex" required>
+                                <option value="">Select Sex</option>
+                                <option th:each="sexe : ${T(ma.projectmanager.taskflow.User.model.Sex).values()}" th:value="${sexe}" th:text="${sexe}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label for="skill">Skill:</label>
+                            <select class="form-control" id="skill" name="skill" required>
+                                <option value="">Select Skill</option>
+                                <option th:each="skill : ${T(ma.projectmanager.taskflow.User.model.Skill).values()}" th:value="${skill}" th:text="${skill}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label>Role:</label><br>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" id="manager" name="role" value="MAN" required>
+                                <label class="form-check-label" for="manager">Manager</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" id="member" name="role" value="MEM" required>
+                                <label class="form-check-label" for="member">Member</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-link p-0">
+                            <img src="images/register.png" alt="Register" style="width: 80px">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+</div>
+</div>
+
+</body>
+
+<footer th:replace="fragments :: footer"></footer>
+
+</html>
