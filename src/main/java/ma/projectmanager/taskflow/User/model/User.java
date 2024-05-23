@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "role" , length = 2, discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "role" , length = 3, discriminatorType = DiscriminatorType.STRING)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class User {
     protected LocalDate birthDay ;
     protected String email;
 
-    @Column(updatable = false)
+    @Column(insertable=false, updatable=false)
     protected String role;
 
     @CreationTimestamp
@@ -35,4 +35,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     protected Sex sex ;
+
+    @Enumerated(EnumType.STRING)
+    private Skill skill;
+
+
 }

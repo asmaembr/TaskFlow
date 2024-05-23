@@ -20,6 +20,7 @@ public class LoginController {
         return "index";
     }
 
+
     @PostMapping("")
     public String loginUser(@RequestParam String username, @RequestParam String password) {
         if (username == null || password == null) {
