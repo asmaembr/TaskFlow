@@ -7,4 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ManagerRepository extends JpaRepository<Manager, Integer> {
 
+
+    Manager findByUsernameAndPassword(String username, String password);
 }

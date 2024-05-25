@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments :: header"></head></head>
+<body>
+<h1>Create Project</h1>
+<form th:action="@{/save}" th:object="${project}" method="post">
+    <div>
+        <label for="description">Description:</label>
+        <input type="text" id="description" th:field="${description}" />
+    </div>
+    <div>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" th:field="${startDate}" />
+    </div>
+    <div>
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" th:field="${endDate}" />
+    </div>
+    <div>
+        <button type="submit" class="btn btn-link p-0">
+            <img src="../images/addP.png" alt="project" style="width: 80px">
+        </button>
+    </div>
+</form>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

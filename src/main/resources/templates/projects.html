@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: header"></head>
+<div th:replace="${dashboard}"></div>
+<body>
+
+<div class="container mt-5">
+
+    <h1 class="mb-4 text-center">P R O J E C T S</h1>
+    <a th:action="@{'/project/add'}" class="btn">
+        <img src="../images/addP.png" alt="project" style="width: 30px">
+        Ajouter un Projet
+    </a>
+    <div class="card-deck">
+        <div class="row">
+            <div class="col-md-4 mb-4" th:each="project : ${projects}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${project.getDescription()}"></h5>
+                        <p class="card-text"><strong>Start Date:</strong> <span th:text="${project.getStartDate()}"></span></p>
+                        <p class="card-text"><strong>End Date:</strong> <span th:text="${project.getEndDate()}"></span></p>
+                        <div>
+                            <a th:href="@{'/project/edit/' + ${project.getId()}}" class="btn">
+                                <img src="../images/edit.png" alt="project" style="width: 30px">
+                            </a>
+                            <a onclick=""
+                               th:action="@{'/project/delete/' + ${project.getId()}}"
+                               class="btn">
+                                <img src="../images/deleteP.png" alt="project" style="width: 30px">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<footer th:replace="fragments :: footer"></footer>
+</html>

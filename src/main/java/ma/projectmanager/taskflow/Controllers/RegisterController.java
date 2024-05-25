@@ -1,11 +1,8 @@
-package ma.projectmanager.taskflow.User.controllers;
+package ma.projectmanager.taskflow.Controllers;
 
-import ma.projectmanager.taskflow.Project.model.Project;
 import ma.projectmanager.taskflow.User.model.Manager;
 import ma.projectmanager.taskflow.User.model.Member;
 import ma.projectmanager.taskflow.User.model.User;
-import ma.projectmanager.taskflow.User.repository.ManagerRepository;
-import ma.projectmanager.taskflow.User.repository.MemberRepository;
 import ma.projectmanager.taskflow.User.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
 
 @Controller
 @RequestMapping("/register")
@@ -47,7 +40,6 @@ public class RegisterController {
             manager.setInscriptionDate(user.getInscriptionDate());
             manager.setSex(user.getSex());
             manager.setSkill(user.getSkill());
-
             repository.save(manager);
         }
         else if (user.getRole().equals("MEM") ){
