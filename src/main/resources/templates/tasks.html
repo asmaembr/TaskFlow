@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: header"></head>
-<div th:replace="${session.dashboard}"></div>
+<div th:replace="fragments :: ${menu}"></div>
 <body>
 <div class="container mt-5">
-    <a th:action="@{'/add'}" class="btn  mb-4">
-        <img src="../images/addT.png" alt="Projects" style="width: 30px"> Add Task</a>
+    <a th:href="@{'/task/add'}"  class="btn mb-4">
+        <img src="../images/addT.png" alt="tasks" style="width: 30px">
+        Add Task
+    </a>
     <h1 class="mb-4 text-center">T A S K S</h1>
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
@@ -26,19 +28,17 @@
             <td th:text="${task.getPriority()}"></td>
             <td th:text="${task.getStatus()}"></td>
             <td>
-                <a th: th:action="@{'/task/edit/' + ${task.getId()}}" class="btn">
+                <a th:href="@{'/task/edit/' + ${task.getId()}}" class="btn">
                     <img src="../images/edit.png" alt="task" style="width: 30px">
                 </a>
-                <a th: th:action="@{'/task/delete/' + ${task.getId()}}" class="btn">
+                <a th:href="@{'/task/delete/' + ${task.getId()}}" class="btn">
                     <img src="../images/deleteT.png" alt="task" style="width: 30px">
                 </a>
             </td>
-
         </tr>
         </tbody>
     </table>
 </div>
-
 </body>
 <footer th:replace="fragments :: footer"></footer>
 </html>

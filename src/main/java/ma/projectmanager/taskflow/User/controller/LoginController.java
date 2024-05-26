@@ -1,4 +1,4 @@
-package ma.projectmanager.taskflow.Controllers;
+package ma.projectmanager.taskflow.User.controller;
 
 import jakarta.servlet.http.HttpSession;
 import ma.projectmanager.taskflow.User.model.User;
@@ -15,9 +15,9 @@ public class LoginController {
     private UserRepository repository;
 
 
-    @GetMapping({"", "/logout"})
+    @GetMapping({"/", "/logout"})
     public String login() {
-        return "index";
+        return "login";
     }
 
 
@@ -26,19 +26,21 @@ public class LoginController {
 
         User user = repository.findByUsernameAndPassword(username, password);
         if (user != null) {
-            session.setAttribute("user", user);
+            session.setAttribute("username",user.getUsername());
+            session.setAttribute("password", user.getPassword());
+            session.setAttribute("id", user.getId());
             session.setAttribute("role", user.getRole());
             if (user.getRole().equals("MEM")) {
-                session.setAttribute("dashboard","fragments :: MemberMenu");
-                return "redirect:/tasks";
+                session.setAttribute("menu", "MemberMenu");
+                return "redirect:/task";
             } else {
-                session.setAttribute("dashboard","fragments :: ManagerMenu");
-                return "redirect:/projects";
+                session.setAttribute("menu", "ManagerMenu");
+                return "redirect:/project";
             }
         }
         else {
             model.addAttribute("error", "Username ou Password invalide");
-            return "index";
+            return "login";
         }
     }
 

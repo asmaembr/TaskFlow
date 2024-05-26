@@ -20,7 +20,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Task task;
 
     private String description;

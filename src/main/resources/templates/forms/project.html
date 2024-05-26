@@ -1,27 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="fragments :: header"></head></head>
+<head th:replace="fragments :: header"></head>
 <body>
-<h1>Create Project</h1>
-<form th:action="@{/save}" th:object="${project}" method="post">
-    <div>
-        <label for="description">Description:</label>
-        <input type="text" id="description" th:field="${description}" />
-    </div>
-    <div>
-        <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" th:field="${startDate}" />
-    </div>
-    <div>
-        <label for="endDate">End Date:</label>
-        <input type="date" id="endDate" th:field="${endDate}" />
-    </div>
-    <div>
-        <button type="submit" class="btn btn-link p-0">
-            <img src="../images/addP.png" alt="project" style="width: 80px">
-        </button>
-    </div>
-</form>
-<footer th:replace="fragments :: footer"></footer>
+<div class="container d-flex justify-content-center align-items-center m-5">
+    <div class=" bg-light card shadow-sm mt-5 p-4" style="width: 100%; max-width: 900px;">
+        <h2 class="card-title text-center mb-4">Create Project</h2>
+    <form th:action="@{'/project/save'}" th:object="${project}" method="post">
+        <div class="container">
+            <input type="hidden" name="id" th:value="${project.getId()}">
+            <div class="row">
+        <div class="form-group  m-3">
+            <label for="description">Description:</label>
+            <input type="text" class="form-control" id="description" th:field="${project.description}"
+            th:value="${project.getDescription()}"/>
+        </div>
+
+        <div class="form-group m-3">
+            <label for="startDate">Start Date:</label>
+            <input type="date" class="form-control" id="startDate" th:field="${project.startDate}"
+            th:value="${#dates.format(project.getStartDate(),'yyyy-MM-dd')}"/>
+        </div>
+
+        <div class="form-group m-3">
+            <label for="endDate">End Date:</label>
+            <input type="date" class="form-control" id="endDate" th:field="${project.endDate}"
+            th:value="${#dates.format(project.getEndDate(),'yyyy-MM-dd')}"/>
+        </div>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-link p-0">
+                    <img src="../images/addP.png" alt="submit" style="width: 80px">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
 </body>
+<footer th:replace="fragments :: footer"></footer>
 </html>

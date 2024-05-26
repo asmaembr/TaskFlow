@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ma.projectmanager.taskflow.Project.model.Project;
 import ma.projectmanager.taskflow.Task.model.Task;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -27,6 +28,9 @@ public class Objective {
     private LocalDate endDate ;
     private String description ;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "objective")
     private List<Task> tasks;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Project project ;
 }

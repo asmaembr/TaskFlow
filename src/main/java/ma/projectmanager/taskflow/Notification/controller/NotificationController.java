@@ -1,12 +1,13 @@
-package ma.projectmanager.taskflow.Controllers;
+package ma.projectmanager.taskflow.Notification.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/notification")
 public class NotificationController {
-    @RequestMapping("/notification")
+    @RequestMapping("/")
     public String index( HttpSession session){
         return "notifications";
     }

@@ -1,4 +1,4 @@
-package ma.projectmanager.taskflow.Controllers;
+package ma.projectmanager.taskflow.User.controller;
 
 import ma.projectmanager.taskflow.User.model.Manager;
 import ma.projectmanager.taskflow.User.model.Member;
@@ -57,6 +57,6 @@ public class RegisterController {
             repository.save(member);
         }
 
-        return "index";
+        return "login";
     }
 }

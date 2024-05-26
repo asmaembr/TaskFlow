@@ -1,29 +1,34 @@
-package ma.projectmanager.taskflow.Controllers;
+package ma.projectmanager.taskflow.Objective.controller;
+
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
-public class MemberController{
-    @RequestMapping("/member")
-    public String index(HttpSession session){
-        return "members";
+@RequestMapping("/objective")
+public class ObjectiveController {
+    @RequestMapping("/")
+    public String index( HttpSession session){
+        return "objectives";
     }
+
     @RequestMapping("/add")
     public String add(HttpSession session){
-        return "forms/member";
+        return "forms/objective";
     }
+
     @RequestMapping("/delete")
     public String delete(HttpSession session){
-        return "members";
+        return "objectives";
     }
+
     @RequestMapping("/edit")
     public String edit(HttpSession session){
-        return "forms/member";
+        return "forms/objective";
     }
+
     @RequestMapping("/save")
     public String save(HttpSession session){
-        return "redirect:members";
+        return "redirect:objectives";
     }
 }

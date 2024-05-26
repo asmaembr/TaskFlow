@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ma.projectmanager.taskflow.Notification.model.Notification;
+import ma.projectmanager.taskflow.Objective.model.Objective;
 import ma.projectmanager.taskflow.User.model.Member;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -33,8 +34,11 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private TaskStatus status ;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Member>members;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Member member;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Objective objective;
 
 
 }

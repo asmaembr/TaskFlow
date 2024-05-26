@@ -9,8 +9,6 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +22,7 @@ import java.util.Objects;
 @DiscriminatorValue("MEM")
 public class Member extends User {
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "member")
     private List<Task> tasks = new ArrayList<>();
 
     @Override
@@ -40,7 +38,5 @@ public class Member extends User {
         return Objects.hash(super.hashCode(), tasks);
     }
 
-    public Member(int id, String username, String password, String fullName, String tel, LocalDate birthDay, String email, String role, LocalDateTime inscriptionDate, Sex sex, Skill skill) {
-        super(id, username, password, fullName, tel, birthDay, email, role, inscriptionDate, sex, skill);
-    }
+
 }
