@@ -44,7 +44,6 @@
                         <div class="form-group m-3">
                             <label for="sex">Sex:</label>
                             <select class="form-control" id="sex" name="sex" required>
-                                <option value="">Select Sex</option>
                                 <option th:each="sexe : ${T(ma.projectmanager.taskflow.User.model.Sex).values()}" th:value="${sexe}" th:text="${sexe}"></option>
                             </select>
                         </div>

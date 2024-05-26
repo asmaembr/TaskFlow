@@ -27,7 +27,6 @@ public class RegisterController {
         if (user == null) {
             return "register";
         }
-        System.out.println(user);
         if (user.getRole().equals("MAN")) {
             Manager manager =     new Manager();
             manager.setId(user.getId());

@@ -1,8 +1,12 @@
 package ma.projectmanager.taskflow.Objective.repository;
 
 import ma.projectmanager.taskflow.Objective.model.Objective;
+import ma.projectmanager.taskflow.Project.model.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ObjectiveRepository extends JpaRepository<Objective, Integer> {
+import java.util.List;
 
+public interface ObjectiveRepository extends JpaRepository<Objective, Integer> {
+    List<Objective> findAllByProject(Project project);
+    Objective findById(int id);
 }

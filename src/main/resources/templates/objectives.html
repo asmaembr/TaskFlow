@@ -1,9 +1,85 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: header"></head>
-<div th:replace="${session.dashboard}"></div>
+<div th:replace="fragments :: ${menu}"></div>
 <body>
+<div class="container mt-5">
+    <h1 class="mb-3 text-center ">
+        <p> <img src="../images/goals.png" alt="img" style="width: 60px">
+        Objectives</p>
 
+        <a th:if="${menu} == 'ManagerMenu'" th:href="@{'/objective/add'}" class="btn">
+            <img src="../images/addO.png" alt="objective" style="width: 30px">
+            <strong> Ajouter un Objective</strong>
+        </a>
+    </h1>
+
+    <div class="card-deck">
+        <div class="row">
+            <div class="col-md-6 mb-4" th:each="project : ${projects}">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h3 class="card-title text-center p-3" th:text="${project.getDescription()}"></h3>
+                        <!--
+                        <p class="card-text"><strong>Start Date:</strong> <span th:text="${#dates.format(project.getStartDate(),'yyyy-MM-dd')}"></span></p>
+                        <p class="card-text"><strong>End Date:</strong> <span th:text="${#dates.format(project.getEndDate(),'yyyy-MM-dd')}"></span></p>
+                         -->
+                        <table class="table table-bordered text-center">
+                            <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="objective : ${project.getObjectiveList()}">
+                                <td th:text="${objective.getDescription()}"></td>
+                                <td><span th:text="${#dates.format(objective.getStartDate(),'yyyy-MM-dd')}"></span></td>
+                                <td><span th:text="${#dates.format(objective.getEndDate(),'yyyy-MM-dd')}"></span></td>
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                    <form th:if="${menu} == 'ManagerMenu'" th:action="@{/objective/edit}" method="post">
+                                        <input type="hidden" name="id" th:value="${objective.getId()}">
+                                        <button type="submit" class="btn">
+                                            <img src="../images/edit.png" alt="edit" style="width: 30px">
+                                        </button>
+                                    </form>
+                                    <form th:if="${menu} == 'ManagerMenu'" th:action="@{/objective/delete}" method="post"
+                                          onsubmit="return confirm('Are you sure you want to delete this objective?');">
+                                        <input type="hidden" name="id" th:value="${objective.getId()}">
+                                        <button type="submit" class="btn">
+                                            <img src="../images/deleteO.png" alt="delete" style="width: 30px">
+                                        </button>
+                                    </form>
+                                        </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <form th:if="${menu} == 'ManagerMenu'" th:action="@{/project/edit}" method="post">
+                            <input type="hidden" name="id" th:value="${project.getId()}">
+                            <button type="submit" class="btn">
+                                <img src="../images/edit.png" alt="edit" style="width: 30px">
+                            </button>
+                        </form>
+                        <form th:if="${menu} == 'ManagerMenu'" th:action="@{/project/delete}" method="post"
+                              onsubmit="return confirm('Are you sure you want to delete this project?');">
+                            <input type="hidden" name="id" th:value="${project.getId()}">
+                            <button type="submit" class="btn">
+                                <img src="../images/deleteP.png" alt="delete" style="width: 30px">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <footer th:replace="fragments :: footer"></footer>
 </html>

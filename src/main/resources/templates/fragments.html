@@ -80,12 +80,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/member}">
-                        <img src="../images/users.png" alt="member" style="width: 30px">
-                        Members
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" th:href="@{/logout}">
                         <img src="../images/logout.png" alt="Log out" style="width: 30px">
                         Se déconnecter
@@ -96,10 +90,21 @@
     </div>
 </nav>
 
-<footer class=" bg-light text-center text-lg-start mt-auto py-3 " th:fragment="footer">
+<footer class="bg-light text-center text-lg-start py-3 mt-auto" th:fragment="footer">
     <div class="container text-center">
         <span>© 2024 TaskFlow. All rights reserved.</span>
     </div>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+    </style>
 </footer>
 
 </html>

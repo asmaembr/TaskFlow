@@ -1,10 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments :: header"></head>
 <body>
+<div class="container d-flex justify-content-center align-items-center m-5">
+    <div class=" bg-light card shadow-sm mt-5 p-4" style="width: 100%; max-width: 900px;">
+        <h2 class="card-title text-center mb-4">Crée une Tâche</h2>
+        <form th:action="@{'/task/save'}" th:object="${task}" method="post">
+            <div class="container">
+                <input type="hidden" name="id" th:value="${task.getId()}">
+                <div class="row">
+                    <div class="form-group  m-3">
+                        <label for="description">Description:</label>
+                        <input type="text" class="form-control" id="description" th:field="${task.description}"
+                               th:value="${task.getDescription()}" required/>
+                    </div>
+                    <div class="form-group  m-3">
+                        <label for="priority">Priorité:</label>
+                        <input type="number" class="form-control" id="priority" th:field="${task.priority}"
+                               th:value="${task.getPriority()}" required/>
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" class="form-control" id="startDate" th:field="${task.startDate}"
+                               th:value="${#dates.format(task.getStartDate(),'yyyy-MM-dd')}" required/>
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="endDate">End Date:</label>
+                        <input type="date" class="form-control" id="endDate" th:field="${task.endDate}"
+                               th:value="${#dates.format(task.getEndDate(),'yyyy-MM-dd')}" required/>
+                    </div>
+                    <div class="form-group m-3">
+                        <label for="objective">Objective :</label>
+                        <select class="form-control" id="objective" th:field="${task.objective.id}" required>
+                            <option th:each="objective : ${objectives}" th:value="${objective.getId()}" th:text="${objective.getDescription()}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="member">Member :</label>
+                        <select class="form-control" id="member" th:field="${task.member.id}" required>
+                            <option th:each="member : ${members}" th:value="${member.getId()}" th:text="${member.getFullName()}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="statut">Statut:</label>
+                        <select class="form-control" id="statut" name="statut" required>
+                            <option th:each="statut : ${T(ma.projectmanager.taskflow.Task.model.TaskStatus).values()}" th:value="${statut}" th:text="${statut}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-link p-0">
+                            <img src="../images/addO.png" alt="submit" style="width: 80px">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 </body>
+<footer th:replace="fragments :: footer"></footer>
 </html>

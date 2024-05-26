@@ -45,8 +45,7 @@ public class TaskController {
                                                      .stream()
                                                      .forEach(t -> tasks.add(t));
                                          });
-                             }
-                     );
+                             });
 
         }
         else
