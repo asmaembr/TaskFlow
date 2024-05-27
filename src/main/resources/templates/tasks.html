@@ -14,15 +14,17 @@
             <strong> Ajouter une Tâche</strong>
         </a>
     </h1>
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered text-center">
         <thead class="thead-dark">
         <tr>
-            <th>Mark As Done</th>
+            <th>Done</th>
             <th>Description</th>
             <th>Start Date</th>
             <th>End Date</th>
+            <th>Objective</th>
+            <th>Project</th>
             <th>Status</th>
-            <th>Actions</th>
+            <th th:if="${menu} == 'ManagerMenu'" th:text="Actions"></th>
         </tr>
         </thead>
         <tbody>
@@ -31,21 +33,34 @@
                 <form th:action="@{/task/markAsDone}" method="post">
                     <input type="hidden" name="id" th:value="${task.getId()}">
                     <button type="submit" class="btn">
-                        <img src="../images/done.png" alt="task" style="width: 30px">
+                        <img th:if="${task.getStatus().equals(T(ma.projectmanager.taskflow.Task.model.TaskStatus).DONE)}" src="../images/done.png" style="width: 30px">
+                        <img th:if="${!task.getStatus().equals(T(ma.projectmanager.taskflow.Task.model.TaskStatus).DONE)}" src="../images/done_bw.png"  style="width: 30px">
                     </button>
                 </form>
+
             </td>
             <td th:text="${task.getDescription()}"></td>
-            <td th:text="${task.getStartDate()}"></td>
-            <td th:text="${task.getEndDate()}"></td>
+            <td><span th:text="${#dates.format(task.getStartDate(),'yyyy-MM-dd')}"></span></td>
+            <td><span th:text="${#dates.format(task.getEndDate(),'yyyy-MM-dd')}"></span></td>
+            <td th:text="${task.getObjective().getDescription()}"></td>
+            <td th:text="${task.getObjective().getProject().getDescription()}"></td>
             <td th:text="${task.getStatus()}"></td>
             <td>
-                <a th:href="@{'/task/edit/' + ${task.getId()}}" class="btn">
-                    <img src="../images/edit.png" alt="task" style="width: 30px">
-                </a>
-                <a th:href="@{'/task/delete/' + ${task.getId()}}" class="btn">
-                    <img src="../images/deleteT.png" alt="task" style="width: 30px">
-                </a>
+                <div class="d-flex justify-content-center">
+                <form th:if="${menu} == 'ManagerMenu'" th:action="@{/task/edit}" method="post">
+                    <input type="hidden" name="id" th:value="${task.getId()}">
+                    <button type="submit" class="btn">
+                        <img src="../images/edit.png" alt="edit" style="width: 30px">
+                    </button>
+                </form>
+                <form th:if="${menu} == 'ManagerMenu'" th:action="@{/task/delete}" method="post"
+                      onsubmit="return confirm('Are you sure you want to delete this objective?');">
+                    <input type="hidden" name="id" th:value="${task.getId()}">
+                    <button type="submit" class="btn">
+                        <img src="../images/deleteO.png" alt="delete" style="width: 30px">
+                    </button>
+                </form>
+                </div>
             </td>
         </tr>
         </tbody>

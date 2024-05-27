@@ -1,8 +1,10 @@
 package ma.projectmanager.taskflow.User.controller;
 
+import com.sun.net.httpserver.HttpContext;
 import jakarta.servlet.http.HttpSession;
 import ma.projectmanager.taskflow.User.model.User;
 import ma.projectmanager.taskflow.User.repository.UserRepository;
+import org.apache.catalina.core.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +30,6 @@ public class LoginController {
         if (user != null) {
             session.setAttribute("username",user.getUsername());
             session.setAttribute("password", user.getPassword());
-            session.setAttribute("id", user.getId());
             session.setAttribute("role", user.getRole());
             if (user.getRole().equals("MEM")) {
                 session.setAttribute("menu", "MemberMenu");

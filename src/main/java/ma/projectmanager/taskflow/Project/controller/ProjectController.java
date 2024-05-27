@@ -22,13 +22,15 @@ public class ProjectController {
     @RequestMapping("")
     public String index(HttpSession session, Model model){
         List<Project> projects = projectService.getAllProjects(session);
-        model.addAttribute("menu",session.getAttribute("menu"));
         model.addAttribute("projects",projects);
+        model.addAttribute("menu",session.getAttribute("menu"));
         return "projects";
     }
     @GetMapping("/add")
-    public String add(Model model){
+    public String add(Model model,HttpSession session){
+
         model.addAttribute("project", new Project());
+        model.addAttribute("menu",session.getAttribute("menu"));
         return "forms/project";
     }
 
@@ -38,16 +40,16 @@ public class ProjectController {
         return "redirect:/project";
     }
     @PostMapping("/edit")
-    public String edit(@RequestParam int id ,Model model){
+    public String edit(@RequestParam int id ,Model model, HttpSession session){
         Project project = projectService.getProject(id);
         model.addAttribute("project",project);
+        model.addAttribute("menu",session.getAttribute("menu"));
         return "forms/project";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Project project ,HttpSession session, Model model){
+    public String save(@ModelAttribute Project project ,HttpSession session){
         projectService.saveProject(project,session);
-        model.addAttribute("menu",session.getAttribute("menu"));
         return "redirect:/project";
     }
 

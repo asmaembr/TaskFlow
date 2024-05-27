@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ObjectiveRepository extends JpaRepository<Objective, Integer> {
-    List<Objective> findAllByProject(Project project);
     Objective findById(int id);
 }

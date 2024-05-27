@@ -30,7 +30,7 @@
                                 <th>Description</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Actions</th>
+                                <th th:if="${menu} == 'ManagerMenu'" th:text="Actions"></th>
                             </tr>
                             </thead>
                             <tbody>

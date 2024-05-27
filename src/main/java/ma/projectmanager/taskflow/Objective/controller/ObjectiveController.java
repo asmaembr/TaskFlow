@@ -53,9 +53,8 @@ public class ObjectiveController {
         return "forms/objective";
     }
     @PostMapping("/save")
-    public String save(@ModelAttribute Objective objective , HttpSession session, Model model){
+    public String save(@ModelAttribute Objective objective){
         objectiveService.saveObjective(objective);
-        model.addAttribute("menu",session.getAttribute("menu"));
         return "redirect:/objective";
     }
 

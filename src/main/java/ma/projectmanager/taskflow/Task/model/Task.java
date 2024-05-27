@@ -9,8 +9,10 @@ import ma.projectmanager.taskflow.Objective.model.Objective;
 import ma.projectmanager.taskflow.User.model.Member;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,8 +26,10 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int  id ;
     private String description ;
-    private LocalDate startDate ;
-    private LocalDate endDate ;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date startDate ;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endDate ;
     private int priority ;
 
     @OneToMany( cascade = CascadeType.ALL ,mappedBy = "task")

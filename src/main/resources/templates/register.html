@@ -42,8 +42,9 @@
                         </div>
 
                         <div class="form-group m-3">
-                            <label for="sex">Sex:</label>
+                            <label for="sex">Sexe :</label>
                             <select class="form-control" id="sex" name="sex" required>
+                                <option value="">Sélectionnez Votre Sexe</option>
                                 <option th:each="sexe : ${T(ma.projectmanager.taskflow.User.model.Sex).values()}" th:value="${sexe}" th:text="${sexe}"></option>
                             </select>
                         </div>
@@ -51,7 +52,7 @@
                         <div class="form-group m-3">
                             <label for="skill">Skill:</label>
                             <select class="form-control" id="skill" name="skill" required>
-                                <option value="">Select Skill</option>
+                                <option value="">Sélectionnez Votre Skill</option>
                                 <option th:each="skill : ${T(ma.projectmanager.taskflow.User.model.Skill).values()}" th:value="${skill}" th:text="${skill}"></option>
                             </select>
                         </div>
