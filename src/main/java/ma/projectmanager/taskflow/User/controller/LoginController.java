@@ -30,6 +30,7 @@ public class LoginController {
         if (user != null) {
             session.setAttribute("username",user.getUsername());
             session.setAttribute("password", user.getPassword());
+            session.setAttribute("id",user.getId());
             session.setAttribute("role", user.getRole());
             if (user.getRole().equals("MEM")) {
                 session.setAttribute("menu", "MemberMenu");

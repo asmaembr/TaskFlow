@@ -6,6 +6,7 @@ import ma.projectmanager.taskflow.Objective.repository.ObjectiveRepository;
 import ma.projectmanager.taskflow.Project.model.Project;
 import ma.projectmanager.taskflow.Task.model.Task;
 import ma.projectmanager.taskflow.Project.repository.ProjectRepository;
+import ma.projectmanager.taskflow.Task.model.TaskStatus;
 import ma.projectmanager.taskflow.Task.repository.TaskRepository;
 import ma.projectmanager.taskflow.User.model.Manager;
 import ma.projectmanager.taskflow.User.model.User;
@@ -37,7 +38,6 @@ public class TaskService {
     public List<Task> getAllTasks(HttpSession session){
 
         List<Task> tasks =new ArrayList<>();
-
         if (session.getAttribute("role").equals("MAN")) {
             Manager manager = managerRepository.findByUsernameAndPassword(
                     (String) session.getAttribute("username"),
@@ -94,5 +94,11 @@ public class TaskService {
             taskRepository.save(task);
         }
 
+    }
+
+    public void markAsDone(int id) {
+        Task task = getTask(id);
+        task.setStatus(TaskStatus.DONE);
+        saveTask(task);
     }
 }

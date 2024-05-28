@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: header"></head>
-<body>
+<body class="bg-light">
 <div class="d-flex justify-content-center align-items-center flex-grow-1">
     <div class="card shadow-sm p-4 " style="width: 100%; max-width: 400px;">
-        <h2 class="card-title text-center mb-4">Connexion</h2>
+        <h2 class="card-title text-center mb-4">Login</h2>
         <form action="/login" method="post">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
@@ -21,7 +21,7 @@
             </div>
         </form>
         <div class="text-center mt-3">
-            vous n'avez pas de compte ? <a href="/register">S'inscrire</a>
+           you don't have an account ? <a href="/register">register</a>
         </div>
         <!-- Error message display -->
         <div th:if="${error}" class="alert alert-danger mt-3" role="alert">

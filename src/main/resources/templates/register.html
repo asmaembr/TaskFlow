@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: header"></head>
 <body>
-<div class="container d-flex justify-content-center align-items-center">
+<div class="container d-flex justify-content-center align-items-center ">
     <div class=" bg-light card shadow-sm mt-5 p-4" style="width: 100%; max-width: 900px;">
-        <h2 class="card-title text-center mb-4">Inscription</h2>
+        <h2 class="card-title text-center mb-4">Register</h2>
         <form action="/register" method="post">
             <div class="container">
                 <div class="row">
@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="form-group m-3">
-                            <label for="tel">Telephone:</label>
+                            <label for="tel">Phone Number:</label>
                             <input type="tel" class="form-control" id="tel" name="tel" required>
                         </div>
 
@@ -42,9 +42,9 @@
                         </div>
 
                         <div class="form-group m-3">
-                            <label for="sex">Sexe :</label>
+                            <label for="sex">Gender :</label>
                             <select class="form-control" id="sex" name="sex" required>
-                                <option value="">Sélectionnez Votre Sexe</option>
+                                <option value="">Select your Gender</option>
                                 <option th:each="sexe : ${T(ma.projectmanager.taskflow.User.model.Sex).values()}" th:value="${sexe}" th:text="${sexe}"></option>
                             </select>
                         </div>
@@ -52,7 +52,7 @@
                         <div class="form-group m-3">
                             <label for="skill">Skill:</label>
                             <select class="form-control" id="skill" name="skill" required>
-                                <option value="">Sélectionnez Votre Skill</option>
+                                <option value="">Select your Skill</option>
                                 <option th:each="skill : ${T(ma.projectmanager.taskflow.User.model.Skill).values()}" th:value="${skill}" th:text="${skill}"></option>
                             </select>
                         </div>

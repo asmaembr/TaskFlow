@@ -4,7 +4,7 @@
 <body>
 <div class="container d-flex justify-content-center align-items-center m-5">
     <div class=" bg-light card shadow-sm mt-5 p-4" style="width: 100%; max-width: 900px;">
-        <h2 class="card-title text-center mb-4">Crée un Projet</h2>
+        <h2 class="card-title text-center mb-4">Create Project</h2>
     <form th:action="@{'/project/save'}" th:object="${project}" method="post">
         <div class="container">
             <input type="hidden" name="id" th:value="${project.getId()}">

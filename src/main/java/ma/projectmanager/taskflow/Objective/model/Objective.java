@@ -32,9 +32,9 @@ public class Objective {
     private Date endDate ;
     private String description ;
 
-    @OneToMany(cascade = CascadeType.ALL , mappedBy = "objective")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "objective")
     private List<Task> tasks;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Project project ;
 }

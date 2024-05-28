@@ -32,16 +32,16 @@ public class Task {
     private Date endDate ;
     private int priority ;
 
-    @OneToMany( cascade = CascadeType.ALL ,mappedBy = "task")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
     private List<Notification> notifications ;
 
     @Enumerated(EnumType.STRING)
     private TaskStatus status ;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Member member;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Objective objective;
 
 

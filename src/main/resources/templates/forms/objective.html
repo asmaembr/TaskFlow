@@ -4,7 +4,7 @@
 <body>
 <div class="container d-flex justify-content-center align-items-center m-5">
     <div class=" bg-light card shadow-sm mt-5 p-4" style="width: 100%; max-width: 900px;">
-        <h2 class="card-title text-center mb-4">Crée un Objective</h2>
+        <h2 class="card-title text-center mb-4">Create Objective</h2>
         <form th:action="@{'/objective/save'}" th:object="${objective}" method="post">
             <div class="container">
                 <input type="hidden" name="id" th:value="${objective.getId()}">

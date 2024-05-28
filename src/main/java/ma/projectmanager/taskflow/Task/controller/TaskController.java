@@ -30,12 +30,18 @@ public class TaskController {
     @Autowired
     private MemberRepository memberRepository;
 
+    private boolean done =false ;
+
 
     @RequestMapping("")
     public String index(HttpSession session , Model model) {
         List<Task> tasks = taskService.getAllTasks(session);
         model.addAttribute("tasks", tasks);
         model.addAttribute("menu",session.getAttribute("menu"));
+        if(done == true ){
+            model.addAttribute("message", "Task Marked as Done Successfully");
+        }
+       done= false ;
         return "tasks";
     }
 
@@ -75,18 +81,11 @@ public class TaskController {
         return "redirect:/task";
     }
 
-    @PostMapping("/updateTaskStatus")
-    @ResponseBody
-    public ResponseEntity<?> updateTaskStatus(@RequestBody Map<String, String> payload) {
-        String taskId = payload.get("taskId");
-        String newStatus = payload.get("newStatus");
-
-        // Find the task by ID and update its status
-        Task task = taskService.getTask(Integer.parseInt(taskId));
-        task.setStatus(TaskStatus.valueOf(newStatus));
-        taskService.saveTask(task);
-
-        return ResponseEntity.ok().body("Task status updated successfully");
+    @PostMapping("/done")
+    public String MarkAsDone(@RequestParam int id , Model model) {
+        taskService.markAsDone(id);
+        done = true ;
+        return "redirect:/task";
     }
 
 }
