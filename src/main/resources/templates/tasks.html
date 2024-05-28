@@ -33,18 +33,20 @@
     <table class="table table-striped table-bordered text-center">
         <thead class="thead-dark">
         <tr>
+            <th>Priority</th>
             <th>Mark As Done</th>
             <th>Description</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th>Objective</th>
-            <th>Project</th>
             <th>Status</th>
+            <th>Member</th>
             <th th:if="${menu} == 'ManagerMenu'" th:text="Actions"></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="task : ${tasks}">
+            <td th:text="${task.getPriority()}"></td>
             <td>
                 <form th:action="@{/task/done}" method="post">
                     <input type="hidden" name="id" th:value="${task.getId()}">
@@ -60,8 +62,8 @@
             <td><span th:text="${#dates.format(task.getStartDate(),'yyyy-MM-dd')}"></span></td>
             <td><span th:text="${#dates.format(task.getEndDate(),'yyyy-MM-dd')}"></span></td>
             <td th:text="${task.getObjective().getDescription()}"></td>
-            <td th:text="${task.getObjective().getProject().getDescription()}"></td>
             <td th:text="${task.getStatus()}"></td>
+            <td th:text="${task.getMember().getUsername()}"></td>
             <td>
                 <div class="d-flex justify-content-center">
                 <form th:if="${menu} == 'ManagerMenu'" th:action="@{/task/edit}" method="post">

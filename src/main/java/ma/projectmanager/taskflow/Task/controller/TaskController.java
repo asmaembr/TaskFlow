@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -34,6 +35,7 @@ public class TaskController {
     @RequestMapping("")
     public String index(HttpSession session , Model model) {
         List<Task> tasks = taskService.getAllTasks(session);
+        tasks.sort(Comparator.comparingInt(Task::getPriority));
         model.addAttribute("tasks", tasks);
         model.addAttribute("menu",session.getAttribute("menu"));
         if(done){
