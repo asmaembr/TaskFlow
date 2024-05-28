@@ -10,8 +10,6 @@ import ma.projectmanager.taskflow.User.model.Member;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 

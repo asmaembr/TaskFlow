@@ -1,10 +1,8 @@
 package ma.projectmanager.taskflow.User.controller;
 
-import com.sun.net.httpserver.HttpContext;
 import jakarta.servlet.http.HttpSession;
 import ma.projectmanager.taskflow.User.model.User;
 import ma.projectmanager.taskflow.User.repository.UserRepository;
-import org.apache.catalina.core.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +39,7 @@ public class LoginController {
             }
         }
         else {
-            model.addAttribute("error", "Username ou Password invalide");
+            model.addAttribute("error", "Username or Password not correct!");
             return "login";
         }
     }

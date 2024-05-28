@@ -9,7 +9,6 @@ import ma.projectmanager.taskflow.Project.repository.ProjectRepository;
 import ma.projectmanager.taskflow.Task.model.TaskStatus;
 import ma.projectmanager.taskflow.Task.repository.TaskRepository;
 import ma.projectmanager.taskflow.User.model.Manager;
-import ma.projectmanager.taskflow.User.model.User;
 import ma.projectmanager.taskflow.User.repository.ManagerRepository;
 import ma.projectmanager.taskflow.User.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +28,7 @@ public class TaskService {
 
     @Autowired
     private MemberRepository memberRepository;
-    @Autowired
-    private ProjectRepository projectRepository;
+
     @Autowired
     private ObjectiveRepository objectiveRepository;
 
@@ -69,8 +67,8 @@ public class TaskService {
     }
 
     public Task getTask( int id ){
-        Task Task = taskRepository.findById(id);
-        return Task;
+        Task task = taskRepository.findById(id);
+        return task;
     }
 
 

@@ -4,18 +4,16 @@ import jakarta.servlet.http.HttpSession;
 import ma.projectmanager.taskflow.Objective.model.Objective;
 import ma.projectmanager.taskflow.Objective.service.ObjectiveService;
 import ma.projectmanager.taskflow.Task.model.Task;
-import ma.projectmanager.taskflow.Task.model.TaskStatus;
 import ma.projectmanager.taskflow.Task.service.TaskService;
 import ma.projectmanager.taskflow.User.model.Member;
 import ma.projectmanager.taskflow.User.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 @RequestMapping("/task")
@@ -38,7 +36,7 @@ public class TaskController {
         List<Task> tasks = taskService.getAllTasks(session);
         model.addAttribute("tasks", tasks);
         model.addAttribute("menu",session.getAttribute("menu"));
-        if(done == true ){
+        if(done){
             model.addAttribute("message", "Task Marked as Done Successfully");
         }
        done= false ;
@@ -82,7 +80,7 @@ public class TaskController {
     }
 
     @PostMapping("/done")
-    public String MarkAsDone(@RequestParam int id , Model model) {
+    public String MarkAsDone(@RequestParam int id ) {
         taskService.markAsDone(id);
         done = true ;
         return "redirect:/task";
