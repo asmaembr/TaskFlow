@@ -23,7 +23,6 @@ public class ProjectService {
     private MemberRepository memberRepository;
 
     public List<Project> getAllProjects(HttpSession session){
-
         List<Project> projects = null;
         if(session.getAttribute("role").equals("MAN")){
             projects= projectRepository.findAllByManagerId(
@@ -41,9 +40,7 @@ public class ProjectService {
                                     (String) session.getAttribute("username"),
                                     (String) session.getAttribute("password"))
                             ))
-                    )
-                    .collect(Collectors.toList());
-
+                    ).collect(Collectors.toList());
         }
         return projects;
     }
@@ -56,7 +53,6 @@ public class ProjectService {
         Project project = projectRepository.findById(id);
         return project;
     }
-
 
     public void saveProject(Project project , HttpSession session){
         if(projectRepository.findById(project.getId()) != null){

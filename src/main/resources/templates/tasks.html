@@ -30,7 +30,7 @@
 
     </div>
 
-    <table class="table table-striped table-bordered text-center">
+    <table class="table text-center">
         <thead class="thead-dark">
         <tr>
             <th>Priority</th>
@@ -45,12 +45,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="task : ${tasks}">
+        <tr th:each="task : ${tasks}" th:id="'task-' + ${task.getId()}">
             <td th:text="${task.getPriority()}"></td>
             <td>
                 <form th:action="@{/task/done}" method="post">
                     <input type="hidden" name="id" th:value="${task.getId()}">
-                    <button type="submit" class="btn">
+                    <button type="submit" class="btn bg-light">
                         <img th:if="${task.getStatus().equals(T(ma.projectmanager.taskflow.Task.model.TaskStatus).DONE)}" src="../images/done.png" style="width: 30px" alt="done">
                         <img th:if="${task.getStatus().equals(T(ma.projectmanager.taskflow.Task.model.TaskStatus).IN_PROGRESS)}" src="../images/progress.png"  style="width: 30px" alt="inprogress">
                         <img th:if="${task.getStatus().equals(T(ma.projectmanager.taskflow.Task.model.TaskStatus).TODO)}" src="../images/todo.png"  style="width: 30px" alt="todo">
@@ -66,19 +66,19 @@
             <td th:text="${task.getMember().getUsername()}"></td>
             <td>
                 <div class="d-flex justify-content-center">
-                <form th:if="${menu} == 'ManagerMenu'" th:action="@{/task/edit}" method="post">
-                    <input type="hidden" name="id" th:value="${task.getId()}">
-                    <button type="submit" class="btn">
-                        <img src="../images/edit.png" alt="edit" style="width: 30px">
-                    </button>
-                </form>
-                <form th:if="${menu} == 'ManagerMenu'" th:action="@{/task/delete}" method="post"
-                      onsubmit="return confirm('Are you sure you want to delete this objective?');">
-                    <input type="hidden" name="id" th:value="${task.getId()}">
-                    <button type="submit" class="btn">
-                        <img src="../images/deleteO.png" alt="delete" style="width: 30px">
-                    </button>
-                </form>
+                    <form th:if="${menu} == 'ManagerMenu'" th:action="@{/task/edit}" method="post">
+                        <input type="hidden" name="id" th:value="${task.getId()}">
+                        <button type="submit" class="btn">
+                            <img src="../images/edit.png" alt="edit" style="width: 30px">
+                        </button>
+                    </form>
+                    <form th:if="${menu} == 'ManagerMenu'" th:action="@{/task/delete}" method="post"
+                          onsubmit="return confirm('Are you sure you want to delete this objective?');">
+                        <input type="hidden" name="id" th:value="${task.getId()}">
+                        <button type="submit" class="btn">
+                            <img src="../images/deleteO.png" alt="delete" style="width: 30px">
+                        </button>
+                    </form>
                 </div>
             </td>
         </tr>
@@ -87,4 +87,19 @@
 </div>
 </body>
 <footer th:replace="fragments :: footer"></footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get the task ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const taskId = urlParams.get('id');
+
+        if (taskId) {
+            const taskRow = document.getElementById('task-' + taskId);
+            if (taskRow) {
+                taskRow.classList.add('table-primary');
+            }
+        }
+    });
+</script>
 </html>

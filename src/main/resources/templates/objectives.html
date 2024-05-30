@@ -17,14 +17,14 @@
     <div class="card-deck">
         <div class="row">
             <div class="col-md-6 mb-4" th:each="project : ${projects}">
-                <div class="card bg-light">
+                <div class="card">
                     <div class="card-body">
                         <h3 class="card-title text-center p-3" th:text="${project.getDescription()}"></h3>
                         <!--
                         <p class="card-text"><strong>Start Date:</strong> <span th:text="${#dates.format(project.getStartDate(),'yyyy-MM-dd')}"></span></p>
                         <p class="card-text"><strong>End Date:</strong> <span th:text="${#dates.format(project.getEndDate(),'yyyy-MM-dd')}"></span></p>
                          -->
-                        <table class="table table-bordered text-center">
+                        <table class="table table-stripped text-center">
                             <thead>
                             <tr>
                                 <th>Description</th>

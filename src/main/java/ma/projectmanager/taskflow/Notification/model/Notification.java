@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import ma.projectmanager.taskflow.Task.model.Task;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.util.Date;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -28,5 +30,13 @@ public class Notification {
     @Enumerated(EnumType.STRING)
     private NotificationType type;
 
-    private LocalDateTime date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date;
+
+    public Notification(Task task, String description, NotificationType type, Date date) {
+        this.task = task;
+        this.description = description;
+        this.type = type;
+        this.date = date;
+    }
 }

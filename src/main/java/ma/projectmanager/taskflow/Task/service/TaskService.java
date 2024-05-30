@@ -1,6 +1,9 @@
 package ma.projectmanager.taskflow.Task.service;
 
 import jakarta.servlet.http.HttpSession;
+import ma.projectmanager.taskflow.Notification.model.Notification;
+import ma.projectmanager.taskflow.Notification.model.NotificationType;
+import ma.projectmanager.taskflow.Notification.repository.NotificationRepository;
 import ma.projectmanager.taskflow.Objective.model.Objective;
 import ma.projectmanager.taskflow.Objective.repository.ObjectiveRepository;
 import ma.projectmanager.taskflow.Project.model.Project;
@@ -32,6 +35,8 @@ public class TaskService {
     @Autowired
     private ObjectiveRepository objectiveRepository;
 
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     public List<Task> getAllTasks(HttpSession session){
 
@@ -75,21 +80,34 @@ public class TaskService {
 
     public void saveTask(Task task){
         if(taskRepository.findById(task.getId()) != null){
-            Task Task1 = taskRepository.findById(task.getId());
-            Task1.setDescription(task.getDescription());
-            Task1.setEndDate(task.getEndDate());
-            Task1.setStartDate(task.getStartDate());
-            Task1.setObjective(objectiveRepository.findById(task.getObjective().getId()));
-            Task1.setMember(memberRepository.findById(task.getMember().getId()));
-            Task1.setPriority(task.getPriority());
-            Task1.setStatus(task.getStatus());
-            taskRepository.save(Task1);
+            Task task1 = taskRepository.findById(task.getId());
+            task1.setDescription(task.getDescription());
+            task1.setEndDate(task.getEndDate());
+            task1.setStartDate(task.getStartDate());
+            task1.setObjective(objectiveRepository.findById(task.getObjective().getId()));
+            task1.setMember(memberRepository.findById(task.getMember().getId()));
+            task1.setPriority(task.getPriority());
+            task1.setStatus(task.getStatus());
+            taskRepository.save(task1);
+            notificationRepository.save(new Notification(
+                    task1,
+                    task1.getDescription()+" updated",
+                    NotificationType.MESSAGE_APP,
+                    task1.getStartDate()
+            ));
+
         }
         else {
             task.setObjective(objectiveRepository.findById(task.getObjective().getId()));
             task.setMember(memberRepository.findById(task.getMember().getId()));
             task.setStatus(task.getStatus());
             taskRepository.save(task);
+            notificationRepository.save(new Notification(
+                    task,
+                    task.getDescription(),
+                    NotificationType.MESSAGE_APP,
+                    task.getStartDate()
+            ));
         }
 
     }

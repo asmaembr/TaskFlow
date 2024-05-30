@@ -15,7 +15,7 @@ public class LoginController {
     private UserRepository repository;
 
 
-    @GetMapping({"/", "/logout"})
+    @RequestMapping({"/", "/logout"})
     public String login() {
         return "login";
     }
@@ -32,7 +32,7 @@ public class LoginController {
             session.setAttribute("role", user.getRole());
             if (user.getRole().equals("MEM")) {
                 session.setAttribute("menu", "MemberMenu");
-                return "redirect:/task";
+                return "redirect:/notification";
             } else {
                 session.setAttribute("menu", "ManagerMenu");
                 return "redirect:/project";

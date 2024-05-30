@@ -41,7 +41,7 @@ public class User {
     protected Sex sex ;
 
     @Enumerated(EnumType.STRING)
-    private Skill skill;
+    protected Skill skill;
 
 
 }

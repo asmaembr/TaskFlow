@@ -1,8 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: header"></head>
-<div th:replace="fragments :: ${menu}"></div>
 <body>
-</body>
+<div th:replace="fragments :: ${menu}"></div>
+<div class="container mt-5">
+    <h1 class="mb-3 text-center">
+        <p> <img src="../images/notifs.png" alt="notif" style="width: 60px">
+            Notifications</p>
+    </h1>
+
+    <div class="row text-center" >
+        <div class="col-md-4 p-3" th:each="notif : ${notifs}">
+            <div class="toast show align-items-center text-bg-light border-0" style="max-height: 80px; overflow: hidden;">
+            <div class="d-flex flex-row justify-content-between align-items-center" style="padding: 0 10px;">
+                <!-- Displaying icons based on task status -->
+                <div class="align-items-start">
+                    <img th:if="${notif.getTask().getStatus().equals(T(ma.projectmanager.taskflow.Task.model.TaskStatus).DONE)}" src="../images/done.png" style="width: 40px; margin-right: 10px;" alt="done">
+                    <img th:if="${notif.getTask().getStatus().equals(T(ma.projectmanager.taskflow.Task.model.TaskStatus).IN_PROGRESS)}" src="../images/progress.png"  style="width: 40px; margin-right: 10px;" alt="inprogress">
+                    <img th:if="${notif.getTask().getStatus().equals(T(ma.projectmanager.taskflow.Task.model.TaskStatus).TODO)}" src="../images/todo.png"  style="width: 40px; margin-right: 10px;" alt="todo">
+                </div>
+
+                <!-- Displaying notification type and description -->
+                <div class="toast-body align-items-center" th:onclick="'redirectToTask(\'' + ${notif.getTask().getId()} + '\')'" style="flex-grow: 1;">
+                    <strong th:text="${notif.getDescription()}"></strong>
+                    <p th:text="${notif.getType()}"></p>
+                </div>
+
+                <!-- Form for deleting notification -->
+                <form class="align-items-end" th:if="${menu} == 'MemberMenu'" th:action="@{/notification/delete}" method="post" onsubmit="return confirm('Are you sure you want to delete this notification?');">
+                    <input type="hidden" name="id" th:value="${notif.getId()}">
+                    <button type="submit" class="btn">
+                        <img src="../images/deleteN.png" alt="delete" style="width: 30px;">
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+</div>
+
 <footer th:replace="fragments :: footer"></footer>
+
+<script>
+    function redirectToTask(taskId) {
+        window.location.href = '/task?id=' + taskId;
+    }
+
+</script>
+
+</body>
 </html>

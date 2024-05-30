@@ -59,7 +59,7 @@ public class TaskController {
 
     @PostMapping ("/delete")
     public String delete(@RequestParam int id) {
-        memberRepository.deleteById(id);
+        taskService.delete(id);
         return "redirect:/task";
     }
 
