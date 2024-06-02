@@ -25,8 +25,10 @@ public class Objective {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate ;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate ;
+
     private String description ;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "objective")

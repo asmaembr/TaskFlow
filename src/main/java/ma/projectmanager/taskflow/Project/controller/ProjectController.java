@@ -23,14 +23,12 @@ public class ProjectController {
     public String index(HttpSession session, Model model){
         List<Project> projects = projectService.getAllProjects(session);
         model.addAttribute("projects",projects);
-        model.addAttribute("menu",session.getAttribute("menu"));
         return "projects";
     }
     @GetMapping("/add")
     public String add(Model model,HttpSession session){
 
         model.addAttribute("project", new Project());
-        model.addAttribute("menu",session.getAttribute("menu"));
         return "forms/project";
     }
 
@@ -43,7 +41,6 @@ public class ProjectController {
     public String edit(@RequestParam int id ,Model model, HttpSession session){
         Project project = projectService.getProject(id);
         model.addAttribute("project",project);
-        model.addAttribute("menu",session.getAttribute("menu"));
         return "forms/project";
     }
 

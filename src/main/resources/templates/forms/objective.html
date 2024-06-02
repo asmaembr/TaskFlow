@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments :: header"></head>
+<div th:replace="fragments :: ${session.menu}"></div>
 <body>
 <div class="container d-flex justify-content-center align-items-center m-5">
     <div class=" bg-light card shadow-sm mt-5 p-4" style="width: 100%; max-width: 900px;">
         <h2 class="card-title text-center mb-4">Create Objective</h2>
-        <form th:action="@{'/objective/save'}" th:object="${objective}" method="post">
+        <form th:action="@{'/objective/save'}" th:object="${objective}" method="post" onsubmit="return validateDates()">
             <div class="container">
                 <input type="hidden" name="id" th:value="${objective.getId()}">
                 <div class="row">
@@ -15,21 +16,25 @@
                                th:value="${objective.getDescription()}" required/>
                     </div>
 
-
                     <div class="form-group m-3">
                         <label for="project">Project:</label>
-                        <select class="form-control" id="project" th:field="${objective.project.id}" required>
-                            <option th:each="project : ${projects}" th:value="${project.getId()}" th:text="${project.getDescription()}"></option>
+                        <select class="form-control" id="project" th:field="${objective.project.id}" required onchange="updateProjectDates()">
+                            <option th:each="project : ${projects}" th:value="${project.getId()}"
+                                    th:text="${project.getDescription()}"
+                                    data-start-date="${#dates.format(project.getStartDate(), 'yyyy-MM-dd')}"
+                                    data-end-date="${#dates.format(project.getEndDate(), 'yyyy-MM-dd')}"></option>
                         </select>
                     </div>
                     <div class="form-group m-3">
-                        <label for="startDate">Start Date:</label>
+                        <label for="startDate">Start Date > </label>
+                        <input class="bg-transparent" type="text"  id="projectStartDate" th:if="${objective.getProject()!=null}"  th:value="${objective.getProject().getStartDate()}">
                         <input type="date" class="form-control" id="startDate" th:field="${objective.startDate}"
                                th:value="${#dates.format(objective.getStartDate(),'yyyy-MM-dd')}" required/>
                     </div>
 
                     <div class="form-group m-3">
-                        <label for="endDate">End Date:</label>
+                        <label for="endDate">End Date < </label>
+                        <input class="bg-transparent" type="text" id="projectEndDate" th:if="${objective.getProject()!=null}" th:value="${objective.getProject().getEndDate()}">
                         <input type="date" class="form-control" id="endDate" th:field="${objective.endDate}"
                                th:value="${#dates.format(objective.getEndDate(),'yyyy-MM-dd')}" required/>
                     </div>
@@ -44,7 +49,72 @@
             </div>
         </form>
     </div>
+
+
+
+    <!-- Toast Containers -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 11;">
+        <div id="dateValidationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="mr-auto">Validation Error</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <img src="../images/deleteN.png" alt="delete" style="width: 30px;">
+                </button>
+            </div>
+            <div class="toast-body">
+                the objective dates should be within the project dates.
+            </div>
+        </div>
+    </div>
+
+    <div aria-live="polite" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="mr-auto">Validation Error</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Start Date should be before End Date.
+            </div>
+        </div>
+    </div>
+
 </div>
+
+<script>
+
+    function validateDates() {
+        // Get the task start and end dates
+        const objectiveStartDate = document.getElementById('startDate').value;
+        const objectiveEndDate = document.getElementById('endDate').value;
+        // Get the objective start and end dates
+        const projectStartDate = document.getElementById('projectStartDate').value;
+        const projectEndDate = document.getElementById('projectEndDate').value;
+
+        // Convert the dates to Date objects
+        const objectiveStart = new Date(objectiveStartDate);
+        const objectiveEnd = new Date(objectiveEndDate);
+        const projectStart = new Date( projectStartDate);
+        const projectEnd = new Date(projectEndDate);
+
+        // Validate the task dates
+        if (objectiveStart < projectStart || objectiveEnd > projectEnd) {
+            $('#dateValidationToast').toast({ delay: 3000 });
+            $('#dateValidationToast').toast('show');
+            return false;
+        }
+
+        if (objectiveStart >= objectiveEnd ) {
+            // Show toast message
+            $('#toast').toast({ delay: 3000 });
+            $('#toast').toast('show');
+            return false;
+        }
+        return true;
+    }
+</script>
 
 </body>
 <footer th:replace="fragments :: footer"></footer>

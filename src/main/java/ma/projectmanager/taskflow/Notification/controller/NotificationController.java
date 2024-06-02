@@ -24,7 +24,6 @@ public class NotificationController {
     public String index(HttpSession session , Model model){
         List<Notification> notifs = notificationService.getAllNotifications(session);
         model.addAttribute("notifs", notifs);
-        model.addAttribute("menu",session.getAttribute("menu"));
         return "notifications";
     }
 

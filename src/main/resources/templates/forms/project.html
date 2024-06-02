@@ -1,44 +1,74 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments :: header"></head>
+<div th:replace="fragments :: ${session.menu}"></div>
 <body>
 <div class="container d-flex justify-content-center align-items-center m-5">
     <div class=" bg-light card shadow-sm mt-5 p-4" style="width: 100%; max-width: 900px;">
         <h2 class="card-title text-center mb-4">Create Project</h2>
-    <form th:action="@{'/project/save'}" th:object="${project}" method="post">
-        <div class="container">
-            <input type="hidden" name="id" th:value="${project.getId()}">
-            <div class="row">
-        <div class="form-group  m-3">
-            <label for="description">Description:</label>
-            <input type="text" class="form-control" id="description" th:field="${project.description}"
-            th:value="${project.getDescription()}" required/>
-        </div>
-
-        <div class="form-group m-3">
-            <label for="startDate">Start Date:</label>
-            <input type="date" class="form-control" id="startDate" th:field="${project.startDate}"
-            th:value="${#dates.format(project.getStartDate(),'yyyy-MM-dd')}" required/>
-        </div>
-
-        <div class="form-group m-3">
-            <label for="endDate">End Date:</label>
-            <input type="date" class="form-control" id="endDate" th:field="${project.endDate}"
-            th:value="${#dates.format(project.getEndDate(),'yyyy-MM-dd')}" required/>
-        </div>
-            </div>
-            <div class="row">
-                <div class="text-center">
-                    <button type="submit" class="btn btn-link p-0">
-                    <img src="../images/addP.png" alt="submit" style="width: 80px">
-                    </button>
+        <form th:action="@{'/project/save'}" th:object="${project}" method="post" onsubmit="return validateDates()">
+            <div class="container">
+                <input type="hidden" name="id" th:value="${project.getId()}">
+                <div class="row">
+                    <div class="form-group m-3">
+                        <label for="description">Description:</label>
+                        <input type="text" class="form-control" id="description" th:field="${project.description}"
+                               th:value="${project.getDescription()}" required/>
+                    </div>
+                    <div class="form-group m-3">
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" class="form-control" id="startDate" th:field="${project.startDate}"
+                               th:value="${#dates.format(project.getStartDate(),'yyyy-MM-dd')}" required/>
+                    </div>
+                    <div class="form-group m-3">
+                        <label for="endDate">End Date:</label>
+                        <input type="date" class="form-control" id="endDate" th:field="${project.endDate}"
+                               th:value="${#dates.format(project.getEndDate(),'yyyy-MM-dd')}" required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-link p-0">
+                            <img src="../images/addP.png" alt="submit" style="width: 80px">
+                        </button>
+                    </div>
                 </div>
             </div>
+        </form>
+    </div>
+
+
+<!-- Toast container -->
+<div aria-live="polite" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="mr-auto">Validation Error</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <img src="../images/deleteN.png" alt="delete" style="width: 30px;">
+            </button>
         </div>
-    </form>
-</div>
+        <div class="toast-body">
+            Start Date should be before End Date.
+        </div>
+    </div>
 </div>
 
+</div>
+
+<script>
+    function validateDates() {
+        var startDate = new Date(document.getElementById('startDate').value);
+        var endDate = new Date(document.getElementById('endDate').value);
+
+        if (startDate >= endDate) {
+            // Show toast message
+            $('#toast').toast({ delay: 3000 });
+            $('#toast').toast('show');
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
+    }
+</script>
 </body>
 <footer th:replace="fragments :: footer"></footer>
 </html>

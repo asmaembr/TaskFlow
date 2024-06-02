@@ -24,10 +24,13 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int  id ;
     private String description ;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate ;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate ;
+
     private int priority ;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")

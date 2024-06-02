@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: header"></head>
-<div th:replace="fragments :: ${menu}"></div>
+<div th:replace="fragments :: ${session.menu}"></div>
 <body>
 <div class="container mt-5">
     <h1 class="mb-3 text-center">
@@ -9,7 +9,7 @@
             <img src="../images/tasks.png" alt="task" style="width:60px">
             Task
         </p>
-        <a th:if="${menu} == 'ManagerMenu'" th:href="@{'/task/add'}" class="btn">
+        <a th:if="${session.menu} == 'ManagerMenu'" th:href="@{'/task/add'}" class="btn">
             <img src="../images/addT.png" alt="project" style="width: 30px">
             <strong> Add Task</strong>
         </a>
@@ -41,7 +41,7 @@
             <th>Objective</th>
             <th>Status</th>
             <th>Member</th>
-            <th th:if="${menu} == 'ManagerMenu'" th:text="Actions"></th>
+            <th th:if="${session.menu} == 'ManagerMenu'" th:text="Actions"></th>
         </tr>
         </thead>
         <tbody>
@@ -66,13 +66,13 @@
             <td th:text="${task.getMember().getUsername()}"></td>
             <td>
                 <div class="d-flex justify-content-center">
-                    <form th:if="${menu} == 'ManagerMenu'" th:action="@{/task/edit}" method="post">
+                    <form th:if="${session.menu} == 'ManagerMenu'" th:action="@{/task/edit}" method="post">
                         <input type="hidden" name="id" th:value="${task.getId()}">
                         <button type="submit" class="btn">
                             <img src="../images/edit.png" alt="edit" style="width: 30px">
                         </button>
                     </form>
-                    <form th:if="${menu} == 'ManagerMenu'" th:action="@{/task/delete}" method="post"
+                    <form th:if="${session.menu} == 'ManagerMenu'" th:action="@{/task/delete}" method="post"
                           onsubmit="return confirm('Are you sure you want to delete this objective?');">
                         <input type="hidden" name="id" th:value="${task.getId()}">
                         <button type="submit" class="btn">

@@ -37,7 +37,6 @@ public class TaskController {
         List<Task> tasks = taskService.getAllTasks(session);
         tasks.sort(Comparator.comparingInt(Task::getPriority));
         model.addAttribute("tasks", tasks);
-        model.addAttribute("menu",session.getAttribute("menu"));
         if(done){
             model.addAttribute("message", "Task Marked as Done Successfully");
         }
@@ -53,7 +52,6 @@ public class TaskController {
         List<Member> members = memberRepository.findAll();
         model.addAttribute("members",members);
         model.addAttribute("task", new Task());
-        model.addAttribute("menu",session.getAttribute("menu"));
         return "forms/task";
     }
 
@@ -71,7 +69,6 @@ public class TaskController {
         List<Member> members = memberRepository.findAll();
         model.addAttribute("members",members);
         model.addAttribute("task",task);
-        model.addAttribute("menu",session.getAttribute("menu"));
         return "forms/task";
     }
 

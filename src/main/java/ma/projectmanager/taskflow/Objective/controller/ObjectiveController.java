@@ -28,7 +28,6 @@ public class ObjectiveController {
         List<Project> projects = projectService.getAllProjects(session);
         model.addAttribute("objectives",objectives);
         model.addAttribute("projects",projects);
-        model.addAttribute("menu",session.getAttribute("menu"));
         return "objectives";
     }
 
