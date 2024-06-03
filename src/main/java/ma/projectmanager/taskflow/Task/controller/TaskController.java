@@ -3,11 +3,13 @@ package ma.projectmanager.taskflow.Task.controller;
 import jakarta.servlet.http.HttpSession;
 import ma.projectmanager.taskflow.Objective.model.Objective;
 import ma.projectmanager.taskflow.Objective.service.ObjectiveService;
+import ma.projectmanager.taskflow.Project.model.Project;
 import ma.projectmanager.taskflow.Task.model.Task;
 import ma.projectmanager.taskflow.Task.service.TaskService;
 import ma.projectmanager.taskflow.User.model.Member;
 import ma.projectmanager.taskflow.User.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,10 +35,18 @@ public class TaskController {
 
 
     @RequestMapping("")
-    public String index(HttpSession session , Model model) {
-        List<Task> tasks = taskService.getAllTasks(session);
-        tasks.sort(Comparator.comparingInt(Task::getPriority));
-        model.addAttribute("tasks", tasks);
+    public String index(HttpSession session , Model model,
+                        @RequestParam(name = "pageNbr", defaultValue = "0") int pageNbr,
+                        @RequestParam(name = "nbrElt", defaultValue = "5") int nbrElementsParPage,
+                        @RequestParam(name = "motCle",defaultValue = "") String motCle){
+        Page<Task> tasks = taskService.getAllTasks(session,pageNbr,nbrElementsParPage,motCle);
+        int totalPages = tasks.getTotalPages();
+        int[] pages = new int[totalPages];
+        for (int i = 0; i < totalPages; i++) { pages[i] = i;}
+        model.addAttribute("pages", pages);
+        model.addAttribute("pageCourante",  pageNbr);
+        model.addAttribute("motCle",motCle);
+        model.addAttribute("tasks", tasks.getContent());
         if(done){
             model.addAttribute("message", "Task Marked as Done Successfully");
         }

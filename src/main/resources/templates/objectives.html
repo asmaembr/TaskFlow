@@ -4,15 +4,33 @@
 <div th:replace="fragments :: ${session.menu}"></div>
 <body>
 <div class="container mt-5">
-    <h1 class="mb-3 text-center ">
-        <p> <img src="../images/goals.png" alt="img" style="width: 60px">
-        Objectives</p>
-
-        <a th:if="${session.menu} == 'ManagerMenu'" th:href="@{'/objective/add'}" class="btn">
+    <div class="row mb-3">
+        <div class="col-md-3 d-flex align-items-center">
+        <a th:if="${session.menu} == 'ManagerMenu'" th:href="@{'/objective/add'}" class="btn btn-success">
             <img src="../images/addO.png" alt="objective" style="width: 30px">
             <strong> Add Objective</strong>
         </a>
-    </h1>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center align-items-center">
+            <h1>
+                <strong>
+        <img src="../images/goals.png" alt="img" style="width: 60px">
+        Objectives
+                </strong>
+            </h1>
+        </div>
+        <div class="col-md-3 d-flex justify-content-end align-items-center">
+            <form method="post" th:action="@{objective}" class="d-inline-flex">
+                <div class="input-group">
+                    <input type="text" name="motCle" th:value="${motCle}" class="form-control" placeholder="Search Project">
+                    <button type="submit" class="btn btn-outline-secondary">
+                        <img src="../images/search.png" alt="search" style="width: 30px">
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
     <div class="card-deck">
         <div class="row">
@@ -60,23 +78,16 @@
                         </table>
 
                     </div>
-                    <div class="d-flex justify-content-end">
-                        <form th:if="${session.menu} == 'ManagerMenu'" th:action="@{/project/edit}" method="post">
-                            <input type="hidden" name="id" th:value="${project.getId()}">
-                            <button type="submit" class="btn">
-                                <img src="../images/edit.png" alt="edit" style="width: 30px">
-                            </button>
-                        </form>
-                        <form th:if="${session.menu} == 'ManagerMenu'" th:action="@{/project/delete}" method="post"
-                              onsubmit="return confirm('Are you sure you want to delete this project?');">
-                            <input type="hidden" name="id" th:value="${project.getId()}">
-                            <button type="submit" class="btn">
-                                <img src="../images/deleteP.png" alt="delete" style="width: 30px">
-                            </button>
-                        </form>
-                    </div>
                 </div>
             </div>
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+            <ul class="pagination">
+                <li class="page-item" th:each="numeroPage : ${pages}">
+                    <a class="btn btn-outline-secondary" th:href="@{/objective(pageNbr=${numeroPage}, motCle=${motCle})}"
+                       th:classappend="${(pageCourante==numeroPage)?' active':''}" th:text="${1+numeroPage}"></a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

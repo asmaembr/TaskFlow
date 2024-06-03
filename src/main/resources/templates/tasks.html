@@ -4,16 +4,33 @@
 <div th:replace="fragments :: ${session.menu}"></div>
 <body>
 <div class="container mt-5">
-    <h1 class="mb-3 text-center">
-        <p>
-            <img src="../images/tasks.png" alt="task" style="width:60px">
-            Task
-        </p>
+    <div class="row mb-3">
+        <div class="col-md-3 d-flex align-items-center">
         <a th:if="${session.menu} == 'ManagerMenu'" th:href="@{'/task/add'}" class="btn">
             <img src="../images/addT.png" alt="project" style="width: 30px">
             <strong> Add Task</strong>
         </a>
-    </h1>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center align-items-center">
+            <h1>
+                <strong>
+        <img src="../images/tasks.png" alt="task" style="width:60px">
+        Task
+                </strong>
+            </h1>
+        </div>
+        <div class="col-md-3 d-flex justify-content-end align-items-center">
+            <form method="post" th:action="@{task}" class="d-inline-flex">
+                <div class="input-group">
+                    <input type="text" name="motCle" th:value="${motCle}" class="form-control" placeholder="Search Task">
+                    <button type="submit" class="btn btn-outline-secondary">
+                        <img src="../images/search.png" alt="search" style="width: 30px">
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div th:if="${message}" id="successMessage" class="alert alert-success mt-3" role="alert">
         <span th:text="${message}"></span>
         <script>
@@ -84,6 +101,17 @@
         </tr>
         </tbody>
     </table>
+
+
+    <div class="d-flex justify-content-center mt-4">
+        <ul class="pagination">
+            <li class="page-item" th:each="numeroPage : ${pages}">
+                <a class="btn btn-outline-secondary" th:href="@{/task(pageNbr=${numeroPage}, motCle=${motCle})}"
+                   th:classappend="${(pageCourante==numeroPage)?' active':''}" th:text="${1+numeroPage}"></a>
+            </li>
+        </ul>
+    </div>
+
 </div>
 </body>
 <footer th:replace="fragments :: footer"></footer>

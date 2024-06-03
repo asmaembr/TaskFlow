@@ -15,6 +15,10 @@ import ma.projectmanager.taskflow.User.model.Manager;
 import ma.projectmanager.taskflow.User.repository.ManagerRepository;
 import ma.projectmanager.taskflow.User.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,30 +42,32 @@ public class TaskService {
     @Autowired
     private NotificationRepository notificationRepository;
 
-    public List<Task> getAllTasks(HttpSession session){
+    public Page<Task> getAllTasks(HttpSession session, int pageNbr, int nbrElementsParPage, String motCle){
 
-        List<Task> tasks =new ArrayList<>();
+        Page<Task> tasks =null ;
         if (session.getAttribute("role").equals("MAN")) {
             Manager manager = managerRepository.findByUsernameAndPassword(
                     (String) session.getAttribute("username"),
                     (String) session.getAttribute("password"));
             if (manager != null) {
-                List<Project> projects = manager.getProjects();
-                for (Project project : projects) {
-                    List<Objective> objectives = project.getObjectiveList();
-                    for (Objective objective : objectives) {
-                        List<Task>tasks1 = objective.getTasks();
-                        tasks.addAll(tasks1);
-                    }
+                tasks = taskRepository.findAllByObjectiveProjectManagerIdAndDescriptionContainsIgnoreCase(
+                        manager.getId(),
+                        PageRequest.of(pageNbr, nbrElementsParPage),
+                        motCle);
                 }
             }
-        }
         else
-        {
+        {/*
             tasks = memberRepository.findByUsernameAndPassword(
                     (String) session.getAttribute("username"),
                     (String) session.getAttribute("password")
-            ).getTasks();
+            ).getTasks();*/
+            tasks = taskRepository.findAllByMemberIdAndDescriptionContainingIgnoreCaseOrderByPriority(
+                    memberRepository.findByUsernameAndPassword(
+                            (String) session.getAttribute("username"),
+                            (String) session.getAttribute("password")).getId(),
+                    PageRequest.of(pageNbr, nbrElementsParPage),
+                    motCle);
         }
         return tasks;
     }

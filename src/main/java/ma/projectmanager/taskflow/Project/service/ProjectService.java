@@ -6,6 +6,8 @@ import ma.projectmanager.taskflow.Project.repository.ProjectRepository;
 import ma.projectmanager.taskflow.User.repository.ManagerRepository;
 import ma.projectmanager.taskflow.User.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,25 +24,44 @@ public class ProjectService {
     @Autowired
     private MemberRepository memberRepository;
 
-    public List<Project> getAllProjects(HttpSession session){
+    public List<Project> getAllProjects(HttpSession session) {
         List<Project> projects = null;
-        if(session.getAttribute("role").equals("MAN")){
+        if (session.getAttribute("role").equals("MAN")) {
             projects= projectRepository.findAllByManagerId(
                     managerRepository.findByUsernameAndPassword(
                             (String) session.getAttribute("username"),
                             (String) session.getAttribute("password")).getId());
         }
+        else if(session.getAttribute("role").equals("MEM")){ projects = projectRepository.findAll()
+                .stream()
+                .filter(project -> project.getObjectiveList()
+                        .stream()
+                        .flatMap(objective -> objective.getTasks().stream()) // Flatten the tasks stream
+                        .anyMatch(task -> task.getMember().equals(memberRepository.findByUsernameAndPassword(
+                                (String) session.getAttribute("username"),
+                                (String) session.getAttribute("password"))
+                        ))
+                ).collect(Collectors.toList());}
+
+        return projects;
+    }
+
+    public Page<Project> getAllProjectsPages(HttpSession session, int pageNbr, int nbrElementsParPage, String motCle){
+        Page<Project> projects = null;
+        if(session.getAttribute("role").equals("MAN")){
+            projects= projectRepository.findProjectsByManagerIdAndDescriptionContainingIgnoreCase(
+                    managerRepository.findByUsernameAndPassword(
+                            (String) session.getAttribute("username"),
+                            (String) session.getAttribute("password")).getId(),
+                    motCle, PageRequest.of(pageNbr,nbrElementsParPage));
+        }
         else if(session.getAttribute("role").equals("MEM")){
-            projects = projectRepository.findAll()
-                    .stream()
-                    .filter(project -> project.getObjectiveList()
-                            .stream()
-                            .flatMap(objective -> objective.getTasks().stream()) // Flatten the tasks stream
-                            .anyMatch(task -> task.getMember().equals(memberRepository.findByUsernameAndPassword(
-                                    (String) session.getAttribute("username"),
-                                    (String) session.getAttribute("password"))
-                            ))
-                    ).collect(Collectors.toList());
+            projects = projectRepository.findAllByObjectiveListTasksMemberIdAndDescriptionContainsIgnoreCase(
+                    memberRepository.findByUsernameAndPassword(
+                            (String) session.getAttribute("username"),
+                            (String) session.getAttribute("password")).getId(),
+                    PageRequest.of(pageNbr,nbrElementsParPage),
+                    motCle);
         }
         return projects;
     }
