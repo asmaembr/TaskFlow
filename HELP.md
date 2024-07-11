@@ -35,6 +35,4 @@ Bienvenue dans notre application de gestion de projets réalisée avec Spring Bo
 - Asmae Moubarriz
 - Achraf Akrache
 
-Pour toute question, veuillez contacter notre support à l'adresse support@notreapp.com.
-
 Merci d'utiliser notre application!
