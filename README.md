@@ -1,38 +1,42 @@
-# Aide de l'application
+# Application Help
 
 ## Introduction
 
-Bienvenue dans notre application de gestion de projets réalisée avec Spring Boot MVC et Thymeleaf. Cette application permet la gestion des comptes, des rôles, des projets et des tâches, avec des notifications en temps réel et une interface utilisateur conviviale.
+Welcome to our project management application built with Spring Boot MVC and Thymeleaf. This application enables the management of accounts, roles, projects, and tasks, featuring real-time notifications and a user-friendly interface.
 
-## Fonctionnalités
+## Features
 
-- **Création de comptes et gestion des rôles** : Inscription des utilisateurs et attribution de rôles.
-- **Connexion et navigation spécifique** : Interface personnalisée pour managers et membres.
-- **Gestion des projets et des tâches** : Création, modification et suppression de projets et de tâches.
-- **Notifications et mises à jour en temps réel** : Avertissements instantanés pour les nouvelles tâches et mises à jour.
-- **Convivialité de l'interface utilisateur** : Navigation intuitive et pages dynamiques.
+* **Account creation and role management**: User registration and role assignment.
+* **Login and role-specific navigation**: Customized interface for managers and team members.
+* **Project and task management**: Creation, modification, and deletion of projects and tasks.
+* **Real-time notifications and updates**: Instant alerts for new tasks and updates.
+* **User-friendly interface**: Intuitive navigation and dynamic pages.
 
-## Guide rapide
+## Quick Start Guide
 
-### Création de compte
-1. Accédez à la page d'inscription.
-2. Remplissez le formulaire et soumettez.
+### Account Creation
 
-### Connexion
-1. Accédez à la page de connexion.
-2. Entrez vos identifiants et connectez-vous.
+1. Go to the sign-up page.
+2. Fill out the form and submit.
 
-### Gestion des projets et des tâches
-1. Accédez à "Projets" pour créer ou gérer des projets.
-2. Ajoutez ou modifiez des tâches dans chaque projet.
+### Login
+
+1. Go to the login page.
+2. Enter your credentials and log in.
+
+### Project and Task Management
+
+1. Navigate to "Projects" to create or manage projects.
+2. Add or edit tasks within each project.
 
 ### Notifications
-1. Les notifications apparaissent en haut à droite.
-2. Cliquez sur l'icône pour plus de détails.
 
-## Contributeurs
+1. Notifications appear in the top-right corner.
+2. Click the icon for more details.
 
-- Asmae Moubarriz
-- Achraf Akrache
+## Contributors
 
-Merci d'utiliser notre application!
+* Asmae Moubarriz
+* Achraf Akrache
+
+Thank you for using our application!
